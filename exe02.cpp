@@ -5,7 +5,7 @@
 
 using namespace std;
 
-int maxCapacity(int n, int m, vector<vector<pair<int, int>>> &graph, int A, int B)
+int maxCapacity(int n, int m, vector<vector<int>> &graph, int A, int B)
 {
     vector<int> capacity(n + 1, 0);
     priority_queue<pair<int, int>> pq;
@@ -15,11 +15,10 @@ int maxCapacity(int n, int m, vector<vector<pair<int, int>>> &graph, int A, int 
     {
         int u = pq.top().second;
         pq.pop();
-        for (auto &edge : graph[u])
+        for (int v = 1; v <= n; v++)
         {
-            int v = edge.first;
-            int w = edge.second;
-            if (capacity[v] < min(capacity[u], w))
+            int w = graph[u][v];
+            if (w != 0 && capacity[v] < min(capacity[u], w))
             {
                 capacity[v] = min(capacity[u], w);
                 pq.push({capacity[v], v});
@@ -34,13 +33,13 @@ int main()
     int n, m;
     while (cin >> n >> m)
     {
-        vector<vector<pair<int, int>>> graph(n + 1);
+        vector<vector<int>> graph(n + 1, vector<int>(n + 1));
         for (int i = 0; i < m; i++)
         {
             int u, v, p;
             cin >> u >> v >> p;
-            graph[u].push_back({v, p});
-            graph[v].push_back({u, p});
+            graph[u][v] = p;
+            graph[v][u] = p;
             if (n == 0 && m == 0)
                 break;
         }
