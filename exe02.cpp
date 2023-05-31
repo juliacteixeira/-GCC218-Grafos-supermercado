@@ -33,6 +33,9 @@ int main()
     int n, m;
     while (cin >> n >> m)
     {
+        
+        if (n == 0 && m == 0)
+            break;
         vector<vector<int>> graph(n + 1, vector<int>(n + 1));
         for (int i = 0; i < m; i++)
         {
@@ -40,8 +43,6 @@ int main()
             cin >> u >> v >> p;
             graph[u][v] = p;
             graph[v][u] = p;
-            if (n == 0 && m == 0)
-                break;
         }
         int A, B, C;
         cin >> A >> B >> C;
